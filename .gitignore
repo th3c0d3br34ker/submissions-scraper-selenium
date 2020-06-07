@@ -1,0 +1,15 @@
+# User file
+credentials.py
+logs.txt
+.vscode
+
+# Webdriver
+*.exe
+
+# Node
+node_modules
+*.lock
+
+# Python
+**/__pycache__/**
+**/venv/**
