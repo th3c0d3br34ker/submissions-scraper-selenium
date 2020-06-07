@@ -20,7 +20,8 @@ class HR_Scrapper:
                 raise Exception("Chal_slug:"+str(chal_slug))
 
             sub_domain_string = "Domain: "+sub_domain
-            print(track + " "+sub_domain_string + chal_slug.rjust(70 - len(sub_domain_string)))
+            print(track + " "+sub_domain_string +
+                  chal_slug.rjust(70 - len(sub_domain_string)))
 
             sub_id = self.get_submissions(chal_slug, driver)
             code = False
@@ -38,7 +39,7 @@ class HR_Scrapper:
 
         file_path = folder / (filename+ext)
 
-        if not folder.exists():  # os.path.isdir(dir):
+        if not folder.exists():
             folder.absolute().mkdir(exist_ok=True)
             if not file_path.is_file():
                 print(code, file=open(str(file_path), 'w'))
@@ -47,18 +48,18 @@ class HR_Scrapper:
 
     def get_submissions(self, chal_slug, driver):
         submissions = get_submissions_request(chal_slug, driver)
-        
+
         if submissions is None:
             raise Exception("Submissions: "+str(submissions))
-    
-        models = submissions.get('models') 
+
+        models = submissions.get('models')
         if len(models) > 0:
             sub_id = models[0]['id']
             return sub_id
         else:
             return False
 
-    def get_code(self, chal_slug, sub_id, driver):
+    def get_code(self, chal_slug, sub_id, driver) -> get_code_result_model:
         code_res = get_particular_submission(chal_slug, sub_id, driver)
 
         if code_res is None:
