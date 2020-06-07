@@ -1,5 +1,3 @@
-# hackerrank-scraper-selenium
-
 <p align="center">
 	<a href="https://www.hackerrank.com/jainamd"><img src="assets/title-hackerrank.jpg"></a>
 </p>
