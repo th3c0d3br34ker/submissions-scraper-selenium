@@ -2,41 +2,48 @@ from constants import BASE_URL
 from json import loads
 
 
-def get_track_request(track, driver):
-    FILTERS = "?status=solved"
-    LIMIT = "?limit=500"
-    OFFSET = "?offset=0"
+class URL_Service:
 
-    URL = BASE_URL + "tracks/" + track + "/challenges" + LIMIT + OFFSET + FILTERS
+    @staticmethod
+    def get_track_request(track, driver):
 
-    try:
-        driver.get(URL)
-        get_track = loads(driver.find_element_by_tag_name("body").text)
-    except Exception as e:
-        e.track = track
-        raise e
-    return get_track
+        FILTERS = "?status=solved"
+        LIMIT = "?limit=500"
+        OFFSET = "?offset=0"
 
-def get_submissions_request(chal_slug, driver):
+        URL = BASE_URL + "tracks/" + track + "/challenges" + LIMIT + OFFSET + FILTERS
 
-    LIMIT = "?limit=20"
-    OFFSET = "?offset=0"
+        try:
+            driver.get(URL)
+            get_track = loads(driver.find_element_by_tag_name("body").text)
+        except Exception as e:
+            e.track = track
+            raise e
+        return get_track
 
-    URL = BASE_URL + "challenges/" + chal_slug + "/submissions/" + OFFSET + LIMIT
-    try:
-        driver.get(URL)
-        submissions = loads(driver.find_element_by_tag_name("body").text)
-    except Exception as e:
-        e.track = chal_slug
-        raise e
-    return submissions
+    @staticmethod
+    def get_submissions_request(chal_slug, driver):
 
-def get_particular_submission(chal_slug, sub_id, driver):
-    URL = BASE_URL + "challenges/" + chal_slug + "/submissions/" + str(sub_id)
-    try:
-        driver.get(URL)
-        code_res = loads(driver.find_element_by_tag_name("body").text)
-    except Exception as e:
-        e.track = chal_slug
-        raise e
-    return code_res
+        LIMIT = "?limit=20"
+        OFFSET = "?offset=0"
+
+        URL = BASE_URL + "challenges/" + chal_slug + "/submissions/" + OFFSET + LIMIT
+        try:
+            driver.get(URL)
+            submissions = loads(driver.find_element_by_tag_name("body").text)
+        except Exception as e:
+            e.track = chal_slug
+            raise e
+        return submissions
+
+    @staticmethod
+    def get_particular_submission(chal_slug, sub_id, driver):
+        URL = BASE_URL + "challenges/" + \
+            chal_slug + "/submissions/" + str(sub_id)
+        try:
+            driver.get(URL)
+            code_res = loads(driver.find_element_by_tag_name("body").text)
+        except Exception as e:
+            e.track = chal_slug
+            raise e
+        return code_res
