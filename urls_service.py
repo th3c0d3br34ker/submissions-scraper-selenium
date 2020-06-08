@@ -4,9 +4,6 @@ from json import loads
 
 class URL_Service:
 
-    def __init__(self):
-        return
-
     def get_track_request(self, track, driver):
         FILTERS = "?status=solved"
         LIMIT = "?limit=500"

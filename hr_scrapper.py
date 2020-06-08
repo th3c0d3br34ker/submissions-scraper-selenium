@@ -8,9 +8,6 @@ url_serv = URL_Service()
 
 class HR_Scrapper:
 
-    def __init__(self):
-        return
-
     def get_track(self, track, driver):
         tracks = url_serv.get_track_request(track, driver)
         models = tracks.get('models')
