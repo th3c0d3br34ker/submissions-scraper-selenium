@@ -2,8 +2,9 @@ from models import get_code_result_model
 from constants import BASE_DIR
 from pathlib import Path
 from util import get_file_extension
-from urls_service import get_track_request, get_submissions_request, get_particular_submission
+from urls_service import URL_Service
 
+url_serv = URL_Service()
 
 class HR_Scrapper:
 
@@ -11,7 +12,7 @@ class HR_Scrapper:
         return
 
     def get_track(self, track, driver):
-        tracks = get_track_request(track, driver)
+        tracks = url_serv.get_track_request(track, driver)
         models = tracks.get('models')
         for i in models:
             chal_slug = i.get('slug')
@@ -47,7 +48,7 @@ class HR_Scrapper:
             print(code, file=open(str(file_path), 'w'))
 
     def get_submissions(self, chal_slug, driver):
-        submissions = get_submissions_request(chal_slug, driver)
+        submissions = url_serv.get_submissions_request(chal_slug, driver)
 
         if submissions is None:
             raise Exception("Submissions: "+str(submissions))
@@ -60,7 +61,8 @@ class HR_Scrapper:
             return False
 
     def get_code(self, chal_slug, sub_id, driver) -> get_code_result_model:
-        code_res = get_particular_submission(chal_slug, sub_id, driver)
+        code_res = url_serv.get_particular_submission(
+            chal_slug, sub_id, driver)
 
         if code_res is None:
             raise Exception("Code_res: "+code_res)
