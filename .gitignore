@@ -2,6 +2,7 @@
 credentials.py
 logs.txt
 .vscode
+assets
 
 # Webdriver
 *.exe
