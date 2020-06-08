@@ -4,7 +4,9 @@ from json import loads
 
 class URL_Service:
 
-    def get_track_request(self, track, driver):
+    @staticmethod
+    def get_track_request(track, driver):
+
         FILTERS = "?status=solved"
         LIMIT = "?limit=500"
         OFFSET = "?offset=0"
@@ -19,7 +21,8 @@ class URL_Service:
             raise e
         return get_track
 
-    def get_submissions_request(self, chal_slug, driver):
+    @staticmethod
+    def get_submissions_request(chal_slug, driver):
 
         LIMIT = "?limit=20"
         OFFSET = "?offset=0"
@@ -33,7 +36,8 @@ class URL_Service:
             raise e
         return submissions
 
-    def get_particular_submission(self, chal_slug, sub_id, driver):
+    @staticmethod
+    def get_particular_submission(chal_slug, sub_id, driver):
         URL = BASE_URL + "challenges/" + \
             chal_slug + "/submissions/" + str(sub_id)
         try:

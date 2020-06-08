@@ -32,7 +32,8 @@ class HR_Scrapper:
                 ext = get_file_extension(track, lang)
                 self.create_code_file(track, sub_domain, chal_slug, code, ext)
 
-    def create_code_file(self, track, sub_domain, filename, code, ext):
+    @staticmethod
+    def create_code_file(track, sub_domain, filename, code, ext):
         folder = Path("..", BASE_DIR, track, sub_domain)
 
         file_path = folder / (filename+ext)
@@ -44,7 +45,8 @@ class HR_Scrapper:
         else:
             print(code, file=open(str(file_path), 'w'))
 
-    def get_submissions(self, chal_slug, driver):
+    @staticmethod
+    def get_submissions(chal_slug, driver):
         submissions = url_serv.get_submissions_request(chal_slug, driver)
 
         if submissions is None:
@@ -57,7 +59,8 @@ class HR_Scrapper:
         else:
             return False
 
-    def get_code(self, chal_slug, sub_id, driver) -> get_code_result_model:
+    @staticmethod
+    def get_code(chal_slug, sub_id, driver) -> get_code_result_model:
         code_res = url_serv.get_particular_submission(
             chal_slug, sub_id, driver)
 
