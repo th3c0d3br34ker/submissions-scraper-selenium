@@ -6,7 +6,7 @@
 
 # Hackerrank Scraper
 
-Get your Hackerrank solutions of problems you have solved in an easy  and quick way.
+Get your Hackerrank solutions of problems you have solved in an easy and quick way.
 
 ## Setup
 
