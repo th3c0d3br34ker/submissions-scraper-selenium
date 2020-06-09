@@ -6,19 +6,21 @@ import logging
 
 from credentials import username, password
 from tracks import TRACKS
+from core.util import setupPath
+from constants import WEBDRIVER_DIR
 
 from selenium.webdriver.chrome import options
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
+setupPath()
+
 logging.basicConfig(filename="logs.txt")
 hr_scrap = HR_Scrapper()
 
-chromedriver_path = Path("./Requirements/chromedriver.exe")
-
+chromedriver_path = Path(WEBDRIVER_DIR)
 chrome_options = options.Options()
 chrome_options.add_argument('--ignore-errors')
-
 
 driver = webdriver.Chrome(
     executable_path=chromedriver_path,

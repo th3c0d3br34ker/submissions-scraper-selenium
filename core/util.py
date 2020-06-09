@@ -25,3 +25,21 @@ def get_file_extension(track, lang):
         return ext.get(track)
     else:
         return ""
+
+def setupPath():
+    from constants import BASE_DIR, WEBDRIVER_DIR
+    from tracks import TRACKS
+    from pathlib import Path
+
+    BASE_DIR = Path(BASE_DIR)
+    WEBDRIVER_DIR = Path(WEBDRIVER_DIR)
+    BASE_DIR.mkdir(exist_ok=True)
+
+    for track in TRACKS:
+        (BASE_DIR / track).mkdir(exist_ok=True)
+    
+    if not WEBDRIVER_DIR.exists():
+        print("Please check that {} is present in {}".format(
+            WEBDRIVER_DIR.name,
+            WEBDRIVER_DIR.resolve())
+            )

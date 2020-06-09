@@ -1,1 +1,1 @@
-TRACKS= ["java", "python", "c", "cpp"]
+TRACKS= ["shell"] #["java", "python", "c", "cpp"]

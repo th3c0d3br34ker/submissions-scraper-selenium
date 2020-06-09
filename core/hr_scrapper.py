@@ -1,8 +1,8 @@
-from models import get_code_result_model
+import core.get_code_result_model
 from constants import BASE_DIR
 from pathlib import Path
-from util import get_file_extension
-from urls_service import URL_Service
+from core.util import get_file_extension
+from core.urls_service import URL_Service
 
 url_serv = URL_Service()
 
@@ -34,7 +34,7 @@ class HR_Scrapper:
 
     @staticmethod
     def create_code_file(track, sub_domain, filename, code, ext):
-        folder = Path("..", BASE_DIR, track)
+        folder = Path(BASE_DIR, track)
 
         folder.mkdir(exist_ok=True)
 
@@ -64,7 +64,7 @@ class HR_Scrapper:
             return False
 
     @staticmethod
-    def get_code(chal_slug, sub_id, driver) -> get_code_result_model:
+    def get_code(chal_slug, sub_id, driver) -> core.get_code_result_model:
         code_res = url_serv.get_particular_submission(
             chal_slug, sub_id, driver)
 
