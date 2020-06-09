@@ -14,6 +14,14 @@ def get_file_extension(track, lang):
         "sql": ".sql",
         "mysql": ".sql",
         "oracle": ".sql",
-        "ruby": ".rb"
+        "ruby": ".rb",
+        "hashkell": ".hs",
+        "bash": "",
+        "shell": ""
     }
-    return ext[lang] or ext[track]
+    if ext.get(lang) is not None:
+        return ext.get(lang)
+    elif ext.get(track) is not None:
+        return ext.get(track)
+    else:
+        return ""

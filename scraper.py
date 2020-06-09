@@ -1,7 +1,7 @@
 from selenium import webdriver
 from pathlib import Path
 from time import sleep
-from hr_scrapper import HR_Scrapper
+from core.hr_scrapper import HR_Scrapper
 import logging
 
 from credentials import username, password
@@ -18,7 +18,7 @@ chromedriver_path = Path("./Requirements/chromedriver.exe")
 
 chrome_options = options.Options()
 chrome_options.add_argument('--ignore-errors')
-chrome_options.add_argument("--start-minimized")
+
 
 driver = webdriver.Chrome(
     executable_path=chromedriver_path,

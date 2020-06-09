@@ -18,11 +18,7 @@ This tools works with selenium webdriver. Download and store it in the Requireme
 pip install -r requirements.txt
 ```
 
-<<<<<<< HEAD
-2. Setup your credentials in the credentials.py file. Don't worry your password is safe as `credentials.py` is added in `.gitignore`.
-=======
 2.  Setup your credentials in the credentials.py file. Don't worry your password is safe as `credentials.py` is added in `.gitignore`.
->>>>>>> 3f11701efc3dad72e216330a850be0aeaac77c98
 
 ```python
 username="username"
