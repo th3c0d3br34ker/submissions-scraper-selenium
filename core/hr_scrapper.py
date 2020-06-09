@@ -34,7 +34,11 @@ class HR_Scrapper:
 
     @staticmethod
     def create_code_file(track, sub_domain, filename, code, ext):
-        folder = Path("..", BASE_DIR, track, sub_domain)
+        folder = Path("..", BASE_DIR, track)
+
+        folder.mkdir(exist_ok=True)
+
+        folder = folder / sub_domain
 
         file_path = folder / (filename+ext)
 

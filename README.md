@@ -10,7 +10,7 @@ Get your Hackerrank solutions of problems you have solved in an easy and quick w
 
 ## Setup
 
-This tools works with selenium webdriver. Download and store it in the Requirements Folder. Make sure you download the webdriver accorinding to the version of your chrome browser. This code currently only supports Google Chrome. If you want to contribute, I am always open for collaborations.
+This tools works with selenium webdriver. Download and store it in the Requirements Folder. Make sure you download the webdriver accoriding to the version of your chrome browser. This code currently only supports Google Chrome. If you want to contribute, I am always open for collaborations.
 
 1.  Setup requirements for python (>=3.x) using the requirements.txt. Don't forget to setup a virtual environment first.
 
