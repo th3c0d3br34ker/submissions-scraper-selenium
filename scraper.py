@@ -18,7 +18,7 @@ setupPath()
 logging.basicConfig(filename="logs.txt")
 hr_scrap = HR_Scrapper()
 
-chromedriver_path = Path(WEBDRIVER_DIR)
+chromedriver_path = WEBDRIVER_DIR
 chrome_options = options.Options()
 chrome_options.add_argument('--ignore-errors')
 
