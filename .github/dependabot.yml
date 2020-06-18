@@ -7,3 +7,4 @@ updates:
     time: '10:00'
     timezone: Asia/Calcutta
   open-pull-requests-limit: 10
+  assignee: th3c0d3br34ker
