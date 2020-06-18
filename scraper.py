@@ -1,5 +1,4 @@
 from selenium import webdriver
-from pathlib import Path
 from time import sleep
 from core.hr_scrapper import HR_Scrapper
 import logging
