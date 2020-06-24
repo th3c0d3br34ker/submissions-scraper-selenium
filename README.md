@@ -1,4 +1,4 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8318552df2264bac9b2f7248b60588cf)](https://www.codacy.com/manual/th3c0d3br34ker/submissions-scraper-selenium?utm_source=github.com&utm_medium=referral&utm_content=th3c0d3br34ker/submissions-scraper-selenium&utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8318552df2264bac9b2f7248b60588cf)](https://www.codacy.com/manual/th3c0d3br34ker/submissions-scraper-selenium?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=th3c0d3br34ker/submissions-scraper-selenium&amp;utm_campaign=Badge_Grade)
 
 # Submissions Scraper
 
