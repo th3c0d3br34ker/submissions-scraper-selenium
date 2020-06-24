@@ -68,7 +68,7 @@ CodeChef is not fond of scraping. It limits the amount of requests one can make.
 ```python
 self.CodeChef = {
 	"username": "username",
-	"password": "passwords"
+	"password": "password"
 }
 ```
 
