@@ -9,7 +9,13 @@ from time import sleep
 
 
 class CC_Scrapper():
+
     def __init__(self, username: str, driver: webdriver, password=None):
+        """
+        CodeChef Scrapper Class
+
+        This class handles all the methods for scraping the Codechef website.
+        """
         self.username = username
         self.password = password
         self.driver = driver
@@ -40,6 +46,7 @@ class CC_Scrapper():
             return True
         else:
             print("Login Failed! Check your username and password")
+            print("Will try now without Logging in.")
             return False
 
     def LOGOUT(self) -> None:
@@ -79,7 +86,8 @@ class CC_Scrapper():
             self.writeCodeFile(code=problem.get('code'),
                                file_path=uid+submission.get('ext'))
 
-    def getSubmissionsList(self, parsed_response: BeautifulSoup) -> list:
+    @staticmethod
+    def getSubmissionsList(parsed_response: BeautifulSoup) -> list:
 
         problemlist = []
         # Get all the submission sections first.
@@ -103,7 +111,8 @@ class CC_Scrapper():
 
         return problemlist
 
-    def writeCodeFile(self, code: str, file_path: str) -> None:
+    @staticmethod
+    def writeCodeFile(code: str, file_path: str) -> None:
 
         CODE_CHEF_DIR.mkdir(exist_ok=True)
 

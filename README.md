@@ -1,4 +1,4 @@
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8318552df2264bac9b2f7248b60588cf)](https://www.codacy.com/manual/th3c0d3br34ker/submissions-scraper-selenium?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=th3c0d3br34ker/submissions-scraper-selenium&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8318552df2264bac9b2f7248b60588cf)](https://www.codacy.com/manual/th3c0d3br34ker/submissions-scraper-selenium?utm_source=github.com&utm_medium=referral&utm_content=th3c0d3br34ker/submissions-scraper-selenium&utm_campaign=Badge_Grade)
 
 # Submissions Scraper
 
@@ -18,6 +18,8 @@ pip install -r requirements.txt
 
 2.  Setup your credentials in the credentials.py file. Don't worry your password is safe as `credentials.py` is added in `.gitignore`. Add your tracks as per you requirements.
 
+> Check the credentials.py file for details.
+
 3.  Run `scraper.py`.
 
 ```bash
@@ -26,16 +28,17 @@ python scraper.py
 
 ### [Requirements](Requirements/REQUIREMENTS.md)
 
-<h3 id="selenium-webdriver">Selenium Webdriver</h3>
-<p>Currently Working with chromedriver.exe.</p>
-<p>Download the lastest version as per you browser from <a href="https://chromedriver.storage.googleapis.com/index.html">here</a></p>
-<blockquote>
-<p>Note: Currently working with chrome version 83.0</p>
-</blockquote>
+### Selenium Webdriver
+
+Currently Working with chromedriver.exe.
+
+Download the lastest version as per you browser from [here](https://chromedriver.storage.googleapis.com/index.html)
+
+> Note: Currently working with chrome version 83.0
 
 ---
 
-## Hackerrank Scraper	
+## Hackerrank Scraper
 
 <p align="center">
 	<a href="https://www.hackerrank.com/jainamd"><img src="assets/title-hackerrank.jpg"></a>
@@ -53,6 +56,7 @@ self.Hackerrank = {
 	# Domians: "algorithms", "data-structures", "mathematics", "ai", "databases", "regex", "tutorials"
 }
 ```
+
 ---
 
 ## Codechef Scraper
@@ -63,7 +67,7 @@ self.Hackerrank = {
 
 This gets your "Fully Solved" submissions and saves them into a folder on your local machine.
 
-CodeChef is not fond of scraping. It limits the amount of requests one can make. If you have a lot of submissions (>100) to scrape, then I would suggest a naive way to do it. 
+CodeChef is not fond of scraping. It limits the amount of requests one can make. If you have a lot of submissions (>100) to scrape, then I would suggest a naive way to do it.
 
 ```python
 self.CodeChef = {

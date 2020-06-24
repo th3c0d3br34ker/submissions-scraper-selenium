@@ -13,6 +13,11 @@ from core.extensions import HACKERRANK_EXTENSIONS
 class HR_Scrapper():
 
     def __init__(self, username: str, password: str, driver: webdriver):
+        """
+        Hackerrank Scrapper Class
+
+        This class handles all the methods for scraping the Hackerrank website.
+        """
         self.username = username
         self.password = password
         self.driver = driver
@@ -21,6 +26,7 @@ class HR_Scrapper():
 
         self.driver.get(HACKERRANK_BASE+"login")
 
+        # Log in...
         self.driver.find_element(By.NAME, "username").send_keys(self.username)
         self.driver.find_element(By.NAME, "password").send_keys(self.password)
         self.driver.find_element(By.NAME, "password").send_keys(Keys.ENTER)
@@ -36,6 +42,7 @@ class HR_Scrapper():
             else:
                 return False
         except NoSuchElementException:
+            print("Login Falied! Check your username and password.")
             return False
 
     def LOGOUT(self):
@@ -90,7 +97,8 @@ class HR_Scrapper():
             raise error
         return get_track
 
-    def writeCodeFile(self, track, sub_domain, filename, code, ext):
+    @staticmethod
+    def writeCodeFile(track, sub_domain, filename, code, ext):
 
         folder = HACKERRANK_DIR / track
 

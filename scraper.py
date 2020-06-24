@@ -13,11 +13,11 @@ def initialization(platform, credential):
 
             # Login first LOL
             if codechef_scraper.LOGIN():
-
                 # Start the freaking show! :p
-
                 codechef_scraper.getSubmissions()
                 codechef_scraper.LOGOUT()
+            else:
+                codechef_scraper.getSubmissions()
 
         except Exception as error:
             print(error)
