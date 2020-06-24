@@ -4,8 +4,6 @@
 # USER
 credentials.py
 
-README.md
-
 # python
 **/venv/**
 **/__pycache__/**

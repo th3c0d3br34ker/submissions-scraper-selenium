@@ -4,7 +4,7 @@
 
 [Hackerrank Scraper](#Hackerrank-Scraper)
 
-[Codacy Scraper](#Codechef-Scraper)
+[Codechef Scraper](#Codechef-Scraper)
 
 ### Setup
 
