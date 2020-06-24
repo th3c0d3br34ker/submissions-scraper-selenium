@@ -1,43 +1,83 @@
-from selenium import webdriver
-from time import sleep
-from core.hr_scrapper import HR_Scrapper
-import logging
+def initialization(platform, credential):
+    if (platform == "CodeChef"):
+        from core.cc_scrapper import CC_Scrapper
+        from core.utils import setupSeleniumDriver
 
-from credentials import username, password
-from tracks import TRACKS
-from core.util import setupPath
-from constants import WEBDRIVER_DIR
+        try:
+            driver = setupSeleniumDriver()
 
-from selenium.webdriver.chrome import options
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
+            codechef_scraper = CC_Scrapper(
+                username=credential.get("username"),
+                password=credential.get("password"),
+                driver=driver)
 
-setupPath()
+            # Login first LOL
+            if codechef_scraper.LOGIN():
 
-logging.basicConfig(filename="logs.txt")
-hr_scrap = HR_Scrapper()
+                # Start the freaking show! :p
 
-chromedriver_path = WEBDRIVER_DIR
-chrome_options = options.Options()
-chrome_options.add_argument('--ignore-errors')
+                codechef_scraper.getSubmissions()
+                codechef_scraper.LOGOUT()
 
-driver = webdriver.Chrome(
-    executable_path=chromedriver_path,
-    options=chrome_options
-)
-driver.get("https://www.hackerrank.com/auth/login")
+        except Exception as error:
+            print(error)
+        finally:
+            driver.quit()
 
-driver.find_element(By.NAME, "username").send_keys(username)
-driver.find_element(By.NAME, "password").send_keys(password)
-driver.find_element(By.NAME, "password").send_keys(Keys.ENTER)
+    elif (platform == "Hackerrank"):
+        from core.hr_scrapper import HR_Scrapper
+        from core.utils import setupSeleniumDriver
 
-sleep(5)
+        try:
+            driver = setupSeleniumDriver()
 
-for i in TRACKS:
+            hackerrank_scraper = HR_Scrapper(
+                username=credential.get("username"),
+                password=credential.get("password"),
+                driver=driver)
+
+            # Login first :D
+            if hackerrank_scraper.LOGIN():
+
+                # Start the freaking show! :p
+                # Hackerrank uses tracks
+                for track in credential.get("tracks"):
+                    hackerrank_scraper.getTrack(track)
+
+                # Logout :D
+                hackerrank_scraper.LOGOUT()
+
+        except Exception as error:
+            print(error)
+        finally:
+            driver.quit()
+    else:
+        print("Currently supported: ")
+        from core.constants import SUPPORTED
+        for idx, val in enumerate(SUPPORTED):
+            print(f"{idx}. {val}")
+        exit()
+
+
+def main():
     try:
-        hr_scrap.get_track(i, driver)
-    except Exception as e:
-        print("Something went wrong::", str(e))
-        logging.warning(e)
+        from credentials import ACCOUNTS
+        accounts = ACCOUNTS().getAccounts()
+        accountsList = list(accounts)
+    except ModuleNotFoundError:
+        print("Please setup a credentials.py file!")
 
-driver.quit()
+    if accountsList:
+        print("Found the following Account(s): ")
+        for index, account in enumerate(accountsList):
+            print(f"{index+1}. {account}")
+
+        option = int(input("Enter your choice: ")) - 1
+        initialization(accountsList[option],
+                       accounts.get(accountsList[option]))
+    else:
+        print("Please define accounts in credentials.py")
+
+
+if __name__ == "__main__":
+    main()
