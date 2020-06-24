@@ -24,7 +24,7 @@ pip install -r requirements.txt
 python scraper.py
 ```
 
-### Requirements
+### [Requirements](Requirements/REQUIREMENTS.md)
 
 <h3 id="selenium-webdriver">Selenium Webdriver</h3>
 <p>Currently Working with chromedriver.exe.</p>
