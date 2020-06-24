@@ -8,7 +8,7 @@ class ACCOUNTS():
         self.Hackerrank = {
             "username": "username",
             "password": "password",
-            "tracks":  ["ruby"]
+            "tracks":  ["python"]
             # Available (add as per your requirements):
             #   Languages: "java", "python", "c", "cpp", "ruby", "shell", "sql", "fp",
             #   Domians: "algorithms", "data-structures", "mathematics", "ai", "databases", "regex"
