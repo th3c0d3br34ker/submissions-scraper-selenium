@@ -1,14 +1,12 @@
-<p align="center">
-	<a href="https://www.hackerrank.com/jainamd"><img src="assets/title-hackerrank.jpg"></a>
-</p>
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/8318552df2264bac9b2f7248b60588cf)](https://www.codacy.com/manual/th3c0d3br34ker/submissions-scraper-selenium?utm_source=github.com&utm_medium=referral&utm_content=th3c0d3br34ker/submissions-scraper-selenium&utm_campaign=Badge_Grade)
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/eeb5576eb02d4f0e8e8edca5cb3d6024)](https://www.codacy.com/manual/th3c0d3br34ker/hackerrank-scraper-selenium?utm_source=github.com&utm_medium=referral&utm_content=th3c0d3br34ker/hackerrank-scraper-selenium&utm_campaign=Badge_Grade) ![GitHub](https://img.shields.io/github/license/th3c0d3br34ker/hackerrank-scraper-selenium)
+# Submissions Scraper
 
-# Hackerrank Scraper
+[Hackerrank Scraper](#Hackerrank-Scraper)
 
-Get your Hackerrank solutions of problems you have solved in an easy and quick way.
+[Codechef Scraper](#Codechef-Scraper)
 
-## Setup
+### Setup
 
 This tools works with selenium webdriver. Download and store it in the Requirements Folder. Make sure you download the webdriver accoriding to the version of your chrome browser. This code currently only supports Google Chrome. If you want to contribute, I am always open for collaborations.
 
@@ -18,23 +16,64 @@ This tools works with selenium webdriver. Download and store it in the Requireme
 pip install -r requirements.txt
 ```
 
-2.  Setup your credentials in the credentials.py file. Don't worry your password is safe as `credentials.py` is added in `.gitignore`.
+2.  Setup your credentials in the credentials.py file. Don't worry your password is safe as `credentials.py` is added in `.gitignore`. Add your tracks as per you requirements.
 
-```python
-username="username"
-password="password"
-```
+> Check the credentials.py file for details.
 
-3.  Add your tracks to tracks to tracks.py.
-
-```python
-TRACKS= ["java", "python", "c", "cpp"]
-```
-
-4.  Run `scraper.py`.
+3.  Run `scraper.py`.
 
 ```bash
 python scraper.py
 ```
 
-Ran into an ISSUE? Feel free to open an issue. Enjoy!
+### [Requirements](Requirements/REQUIREMENTS.md)
+
+### Selenium Webdriver
+
+Currently Working with chromedriver.exe.
+
+Download the lastest version as per you browser from [here](https://chromedriver.storage.googleapis.com/index.html)
+
+> Note: Currently working with chrome version 83.0
+
+---
+
+## Hackerrank Scraper
+
+<p align="center">
+	<a href="https://www.hackerrank.com/jainamd"><img src="assets/title-hackerrank.jpg"></a>
+</p>
+
+Get your Hackerrank solutions of problems you have solved in an easy and quick way.
+
+```python
+self.Hackerrank = {
+	"username": "username",
+	"password": "password",
+	"tracks":  ["java", "python", "c", "cpp"]
+	# Available (add as per your requirements):
+	# Languages: "ruby", "shell", "sql", "fp",
+	# Domians: "algorithms", "data-structures", "mathematics", "ai", "databases", "regex", "tutorials"
+}
+```
+
+---
+
+## Codechef Scraper
+
+<p align="center">
+	<a href="https://www.codechef.com/jainam_d"><img src="assets/title-codechef.jpg"></a>
+</p>
+
+This gets your "Fully Solved" submissions and saves them into a folder on your local machine.
+
+CodeChef is not fond of scraping. It limits the amount of requests one can make. If you have a lot of submissions (>100) to scrape, then I would suggest a naive way to do it.
+
+```python
+self.CodeChef = {
+	"username": "username",
+	"password": "password"
+}
+```
+
+Ran into an ISSUE? Feel free to open an [issue](https://github.com/th3c0d3br34ker/submissions-scraper-selenium/issues/new). Enjoy!

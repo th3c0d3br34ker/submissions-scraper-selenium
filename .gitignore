@@ -1,16 +1,9 @@
-# User file
-credentials.py
-logs.txt
+# IDE
 .vscode
-assets
 
-# Webdriver
-*.exe
+# USER
+credentials.py
 
-# Node
-node_modules
-*.lock
-
-# Python
-**/__pycache__/**
+# python
 **/venv/**
+**/__pycache__/**

@@ -1,10 +1,11 @@
 version: 2
 updates:
-- package-ecosystem: pip
-  directory: "/"
-  schedule:
-    interval: daily
-    time: '10:00'
-    timezone: Asia/Calcutta
-  open-pull-requests-limit: 10
-  assignee: th3c0d3br34ker
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "10:00"
+      timezone: Asia/Calcutta
+
+    assignees: 
+    - "th3c0d3br34ker"
