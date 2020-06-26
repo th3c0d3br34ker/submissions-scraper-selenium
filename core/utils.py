@@ -17,3 +17,15 @@ def setupSeleniumDriver() -> webdriver:
         options=chrome_options
     )
     return driver
+
+
+def clear():
+    print("\033[H\033[J")
+
+
+def printUserInfo(platform: str, credential: dict):
+    clear()
+    print(f"{platform} Scraper Activated...")
+    print(f"Scraping for user: {credential.get('username')}")
+    if credential.get('password') != "password":
+        print("*" * len(credential.get('password')))

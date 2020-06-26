@@ -46,7 +46,7 @@ class CC_Scrapper():
             return True
         else:
             print("Login Failed! Check your username and password")
-            print("Will try now without Logging in.")
+            print("Will try now without Logging in...")
             return False
 
     def LOGOUT(self) -> None:
@@ -57,9 +57,13 @@ class CC_Scrapper():
         url = CODE_CHEF+'users/'+self.username
         response = self.getResponse(url)
         parsed_response = BeautifulSoup(response, 'lxml')
+
+        # Get the list of submissions.
         plist = self.getSubmissionsList(parsed_response)
 
-        for p in plist:
+        print(f"Found {len(plist)} submissions...")
+
+        for idx, p in enumerate(plist):
             problem = {}
             uid = p.text
             problem['submissions_link'] = p['href']
@@ -74,6 +78,8 @@ class CC_Scrapper():
             tds = submissionResponse.findAll('td')
             submission['id'] = tds[4].text
             submission['lang'] = tds[10].text
+
+            print(f"{idx+1}. {uid} with Submission id:: {submission.get('id')}")
 
             submission['ext'] = '.txt'
 

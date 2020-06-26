@@ -1,4 +1,10 @@
+from core.utils import printUserInfo, clear
+
+
 def initialization(platform, credential):
+
+    printUserInfo(platform, credential)
+
     if (platform == "CodeChef"):
         from core.cc_scrapper import CC_Scrapper
         from core.utils import setupSeleniumDriver
@@ -67,6 +73,8 @@ def main():
     except ModuleNotFoundError:
         print("Please setup a credentials.py file!")
 
+    # TODO: Add check for default username and passowrd.
+
     if accountsList:
         print("Found the following Account(s): ")
         for index, account in enumerate(accountsList):
@@ -80,4 +88,5 @@ def main():
 
 
 if __name__ == "__main__":
+    clear()
     main()
