@@ -17,3 +17,17 @@ def setupSeleniumDriver() -> webdriver:
         options=chrome_options
     )
     return driver
+
+def clear(): 
+    from os import system
+    from os import name as os_name
+    # check and make call for specific operating system 
+    clear = 'clear' if os_name =='posix' else 'cls'
+    system(clear)
+
+def printUserInfo(platform: str, credential: dict):
+    clear()
+    print(f"{platform} Scraper Activated...")
+    print(f"Scraping for user: {credential.get('username')}")
+    if credential.get('password') != "password":
+        print("*" * len(credential.get('password')))
