@@ -18,12 +18,14 @@ def setupSeleniumDriver() -> webdriver:
     )
     return driver
 
-def clear(): 
+
+def clear():
     from os import system
     from os import name as os_name
-    # check and make call for specific operating system 
-    clear = 'clear' if os_name =='posix' else 'cls'
+    # check and make call for specific operating system
+    clear = 'clear' if os_name == 'posix' else 'cls'
     system(clear)
+
 
 def printUserInfo(platform: str, credential: dict):
     clear()

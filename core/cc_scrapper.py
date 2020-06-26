@@ -57,9 +57,12 @@ class CC_Scrapper():
         url = CODE_CHEF+'users/'+self.username
         response = self.getResponse(url)
         parsed_response = BeautifulSoup(response, 'lxml')
+
+        # Get the list of submissions.
         plist = self.getSubmissionsList(parsed_response)
-        
-        print(f"Found total {len(plist)} submissions")
+
+        print(f"Found {len(plist)} submissions...")
+
         for idx, p in enumerate(plist):
             problem = {}
             uid = p.text
