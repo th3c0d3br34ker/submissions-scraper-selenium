@@ -20,11 +20,7 @@ def setupSeleniumDriver() -> webdriver:
 
 
 def clear():
-    from os import system
-    from os import name as os_name
-    # check and make call for specific operating system
-    clear = 'clear' if os_name == 'posix' else 'cls'
-    system(clear)
+    print("\033[H\033[J")
 
 
 def printUserInfo(platform: str, credential: dict):
