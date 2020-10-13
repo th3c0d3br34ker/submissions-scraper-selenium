@@ -77,3 +77,5 @@ self.CodeChef = {
 ```
 
 Ran into an ISSUE? Feel free to open an [issue](https://github.com/th3c0d3br34ker/submissions-scraper-selenium/issues/new). Enjoy!
+
+> Made with 🖤 by Jainam Desai
