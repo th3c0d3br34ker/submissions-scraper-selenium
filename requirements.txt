@@ -6,7 +6,7 @@ chardet==4.0.0
 idna==2.10
 lxml==4.6.2
 pycodestyle==2.6.0
-requests==2.25.0
+requests==2.25.1
 selenium==3.141.0
 soupsieve==2.1
 toml==0.10.2
