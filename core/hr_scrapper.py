@@ -53,53 +53,62 @@ class HR_Scrapper():
         sleep(5)
 
     def getTrack(self, track):
-        tracks = self.getTrackRequest(track)
-        models = tracks.get('models')
-        for i in models:
-            chal_slug = i.get('slug')
-            sub_domain = i.get('track').get('slug')
-            if chal_slug is None:
-                raise Exception("Chal_slug:"+str(chal_slug))
+        limit = 50
+        offset = 0
+        while True:
+            tracks = self.getTrackRequest(track, limit, offset)
+            models = tracks.get('models')
+            for i in models:
+                chal_slug = i.get('slug')
+                sub_domain = i.get('track').get('slug')
+                if chal_slug is None:
+                    raise Exception("Chal_slug:"+str(chal_slug))
 
-            sub_domain_string = "Domain: "+sub_domain
-            print(track + " "+sub_domain_string +
-                  chal_slug.rjust(80 - len(sub_domain_string)))
+                sub_domain_string = "Domain: "+sub_domain
+                print(track + " "+sub_domain_string +
+                    chal_slug.rjust(80 - len(sub_domain_string)))
 
-            if SKIP_DOWNLOADED and self.codeFileExists(track, sub_domain, chal_slug):
-                print("Skipped!")
-                continue
+                if SKIP_DOWNLOADED and self.codeFileExists(track, sub_domain, chal_slug):
+                    print("Skipped!")
+                    continue
 
-            sub_id = self.getSubmissions(chal_slug)
-            code = False
-            if sub_id:
-                for attempt in range(1, MAX_RETRIES+1):
-                    try:
-                        result = self.getCode(chal_slug, sub_id)
-                        code = result.get('code')
-                        lang = result.get('language')
-                        break
-                    except WaitAndRetry as error:
-                        print(error, "(attempt #"+str(attempt)+", retrying in "+str(WAIT_SECONDS)+" seconds)")
-                        if attempt < MAX_RETRIES:
-                            sleep(WAIT_SECONDS)
-                        else:
-                            raise Exception("Max. retries reached. Chal_slug:"+str(chal_slug))
+                sub_id = self.getSubmissions(chal_slug)
+                code = False
+                if sub_id:
+                    for attempt in range(1, MAX_RETRIES+1):
+                        try:
+                            result = self.getCode(chal_slug, sub_id)
+                            code = result.get('code')
+                            lang = result.get('language')
+                            break
+                        except WaitAndRetry as error:
+                            print(error, "(attempt #"+str(attempt)+", retrying in "+str(WAIT_SECONDS)+" seconds)")
+                            if attempt < MAX_RETRIES:
+                                sleep(WAIT_SECONDS)
+                            else:
+                                raise Exception("Max. retries reached. Chal_slug:"+str(chal_slug))
 
-            if code:
-                ext = ''
-                if lang in HACKERRANK_EXTENSIONS.keys():
-                    ext = HACKERRANK_EXTENSIONS.get(lang)
-                elif track in HACKERRANK_EXTENSIONS:
-                    ext = HACKERRANK_EXTENSIONS.get(track)
-                self.writeCodeFile(track, sub_domain, chal_slug, code, ext)
+                if code:
+                    ext = ''
+                    if lang in HACKERRANK_EXTENSIONS.keys():
+                        ext = HACKERRANK_EXTENSIONS.get(lang)
+                    elif track in HACKERRANK_EXTENSIONS:
+                        ext = HACKERRANK_EXTENSIONS.get(track)
+                    self.writeCodeFile(track, sub_domain, chal_slug, code, ext)
 
-    def getTrackRequest(self, track):
+            # check if more pages available
+            if len(models) == limit:
+                offset += limit
+            else:
+                break
+
+    def getTrackRequest(self, track, limit=50, offset=0):
 
         FILTERS = "?status=solved"
-        LIMIT = "?limit=500"
-        OFFSET = "?offset=0"
+        LIMIT = "&limit="+str(limit)
+        OFFSET = "&offset="+str(offset)
 
-        URL = HACKERRANK + "tracks/" + track + "/challenges" + LIMIT + OFFSET + FILTERS
+        URL = HACKERRANK + "tracks/" + track + "/challenges" + FILTERS + LIMIT + OFFSET
 
         try:
             self.driver.get(URL)
