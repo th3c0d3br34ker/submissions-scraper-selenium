@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from core.constants import HACKERRANK, HACKERRANK_BASE, HACKERRANK_DIR
+from core.constants import HACKERRANK, HACKERRANK_BASE, HACKERRANK_DIR, WAIT_SECONDS, MAX_RETRIES
 from core.extensions import HACKERRANK_EXTENSIONS
 
 
@@ -68,9 +68,18 @@ class HR_Scrapper():
             sub_id = self.getSubmissions(chal_slug)
             code = False
             if sub_id:
-                result = self.getCode(chal_slug, sub_id)
-                code = result.get('code')
-                lang = result.get('language')
+                for attempt in range(1, MAX_RETRIES+1):
+                    try:
+                        result = self.getCode(chal_slug, sub_id)
+                        code = result.get('code')
+                        lang = result.get('language')
+                        break
+                    except WaitAndRetry as error:
+                        print(error, "(attempt #"+str(attempt)+", retrying in "+str(WAIT_SECONDS)+" seconds)")
+                        if attempt < MAX_RETRIES:
+                            sleep(WAIT_SECONDS)
+                        else:
+                            raise Exception("Max. retries reached. Chal_slug:"+str(chal_slug))
 
             if code:
                 ext = ''
@@ -139,6 +148,9 @@ class HR_Scrapper():
             raise Exception("Code_res: "+code_res)
 
         model = code_res.get('model')
+        if model == False:
+            raise WaitAndRetry(code_res.get('message'))
+
         code = model.get('code')
         language = model.get('language')
 
@@ -172,3 +184,6 @@ class HR_Scrapper():
             e.track = chal_slug
             raise e
         return code_res
+
+class WaitAndRetry (Exception):
+    pass
