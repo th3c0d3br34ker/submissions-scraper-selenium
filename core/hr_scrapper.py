@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from core.constants import HACKERRANK, HACKERRANK_BASE, HACKERRANK_DIR, WAIT_SECONDS, MAX_RETRIES
+from core.constants import HACKERRANK, HACKERRANK_BASE, HACKERRANK_DIR, SKIP_DOWNLOADED, WAIT_SECONDS, MAX_RETRIES
 from core.extensions import HACKERRANK_EXTENSIONS
 
 
@@ -64,6 +64,10 @@ class HR_Scrapper():
             sub_domain_string = "Domain: "+sub_domain
             print(track + " "+sub_domain_string +
                   chal_slug.rjust(80 - len(sub_domain_string)))
+
+            if SKIP_DOWNLOADED and self.codeFileExists(track, sub_domain, chal_slug):
+                print("Skipped!")
+                continue
 
             sub_id = self.getSubmissions(chal_slug)
             code = False
@@ -124,6 +128,16 @@ class HR_Scrapper():
         else:
             # Currently using print() to write files to disk.
             print(code, file=open(str(file_path), 'w'))
+
+    @staticmethod
+    def codeFileExists(track, sub_domain, filename, ext='*'):
+        folder = HACKERRANK_DIR / track
+        folder = folder / sub_domain
+        if folder.exists():
+            for path in folder.glob(filename+ext):
+                if path.is_file():
+                    return True
+        return False
 
     def getSubmissions(self, chal_slug):
 
