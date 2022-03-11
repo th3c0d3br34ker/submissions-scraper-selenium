@@ -148,6 +148,9 @@ class HR_Scrapper():
 
         models = submissions.get('models')
         if len(models) > 0:
+            # Skip MCQ (multiple choice question)
+            if 'challenge' in models[0] and 'kind' in models[0]['challenge'] and models[0]['challenge']['kind'] == 'mcq':
+                return False
             # models are all the submissions models[0] being the latest
             sub_id = models[0]['id']
             return sub_id
