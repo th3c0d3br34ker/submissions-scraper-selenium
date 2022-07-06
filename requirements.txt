@@ -4,7 +4,7 @@ bs4==0.0.1
 certifi==2020.12.5
 chardet==4.0.0
 idna==3.1
-lxml==4.6.5
+lxml==4.9.1
 pycodestyle==2.6.0
 requests==2.25.1
 selenium==3.141.0
