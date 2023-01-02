@@ -26,7 +26,10 @@ HACKERRANK_EXTENSIONS = {
     "mysql": ".sql",
     "oracle": ".sql",
     "ruby": ".rb",
-    "hashkell": ".hs",
-    "bash": "",
-    "shell": ""
+    "haskell": ".hs",
+    "bash": ".sh",
+    "shell": ".sh",
+    "golang": ".go",
+    "go": ".go",
+    "php": ".php"
 }

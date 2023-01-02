@@ -12,3 +12,10 @@ HACKERRANK_BASE = "https://www.hackerrank.com/"
 HACKERRANK_DIR = Path("../Hackerank Solutions")
 
 SUPPORTED = ['CodeChef', 'Hackerrank']
+
+# Skip solutions that have already been downloaded (speed up re-downloads)
+SKIP_DOWNLOADED = True
+
+# Configure Wait and Retry to circumvent HackerRank's rate limit
+MAX_RETRIES = 10
+WAIT_SECONDS = 30

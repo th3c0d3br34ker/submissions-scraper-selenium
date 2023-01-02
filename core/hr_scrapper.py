@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
-from core.constants import HACKERRANK, HACKERRANK_BASE, HACKERRANK_DIR
+from core.constants import HACKERRANK, HACKERRANK_BASE, HACKERRANK_DIR, SKIP_DOWNLOADED, WAIT_SECONDS, MAX_RETRIES
 from core.extensions import HACKERRANK_EXTENSIONS
 
 
@@ -53,40 +53,62 @@ class HR_Scrapper():
         sleep(5)
 
     def getTrack(self, track):
-        tracks = self.getTrackRequest(track)
-        models = tracks.get('models')
-        for i in models:
-            chal_slug = i.get('slug')
-            sub_domain = i.get('track').get('slug')
-            if chal_slug is None:
-                raise Exception("Chal_slug:"+str(chal_slug))
+        limit = 50
+        offset = 0
+        while True:
+            tracks = self.getTrackRequest(track, limit, offset)
+            models = tracks.get('models')
+            for i in models:
+                chal_slug = i.get('slug')
+                sub_domain = i.get('track').get('slug')
+                if chal_slug is None:
+                    raise Exception("Chal_slug:"+str(chal_slug))
 
-            sub_domain_string = "Domain: "+sub_domain
-            print(track + " "+sub_domain_string +
-                  chal_slug.rjust(80 - len(sub_domain_string)))
+                sub_domain_string = "Domain: "+sub_domain
+                print(track + " "+sub_domain_string +
+                    chal_slug.rjust(80 - len(sub_domain_string)))
 
-            sub_id = self.getSubmissions(chal_slug)
-            code = False
-            if sub_id:
-                result = self.getCode(chal_slug, sub_id)
-                code = result.get('code')
-                lang = result.get('language')
+                if SKIP_DOWNLOADED and self.codeFileExists(track, sub_domain, chal_slug):
+                    print("Skipped!")
+                    continue
 
-            if code:
-                ext = ''
-                if lang in HACKERRANK_EXTENSIONS.keys():
-                    ext = HACKERRANK_EXTENSIONS.get(lang)
-                elif track in HACKERRANK_EXTENSIONS:
-                    ext = HACKERRANK_EXTENSIONS.get(track)
-                self.writeCodeFile(track, sub_domain, chal_slug, code, ext)
+                sub_id = self.getSubmissions(chal_slug)
+                code = False
+                if sub_id:
+                    for attempt in range(1, MAX_RETRIES+1):
+                        try:
+                            result = self.getCode(chal_slug, sub_id)
+                            code = result.get('code')
+                            lang = result.get('language')
+                            break
+                        except WaitAndRetry as error:
+                            print(error, "(attempt #"+str(attempt)+", retrying in "+str(WAIT_SECONDS)+" seconds)")
+                            if attempt < MAX_RETRIES:
+                                sleep(WAIT_SECONDS)
+                            else:
+                                raise Exception("Max. retries reached. Chal_slug:"+str(chal_slug))
 
-    def getTrackRequest(self, track):
+                if code:
+                    ext = ''
+                    if lang in HACKERRANK_EXTENSIONS.keys():
+                        ext = HACKERRANK_EXTENSIONS.get(lang)
+                    elif track in HACKERRANK_EXTENSIONS:
+                        ext = HACKERRANK_EXTENSIONS.get(track)
+                    self.writeCodeFile(track, sub_domain, chal_slug, code, ext)
+
+            # check if more pages available
+            if len(models) == limit:
+                offset += limit
+            else:
+                break
+
+    def getTrackRequest(self, track, limit=50, offset=0):
 
         FILTERS = "?status=solved"
-        LIMIT = "?limit=500"
-        OFFSET = "?offset=0"
+        LIMIT = "&limit="+str(limit)
+        OFFSET = "&offset="+str(offset)
 
-        URL = HACKERRANK + "tracks/" + track + "/challenges" + LIMIT + OFFSET + FILTERS
+        URL = HACKERRANK + "tracks/" + track + "/challenges" + FILTERS + LIMIT + OFFSET
 
         try:
             self.driver.get(URL)
@@ -116,6 +138,16 @@ class HR_Scrapper():
             # Currently using print() to write files to disk.
             print(code, file=open(str(file_path), 'w'))
 
+    @staticmethod
+    def codeFileExists(track, sub_domain, filename, ext='*'):
+        folder = HACKERRANK_DIR / track
+        folder = folder / sub_domain
+        if folder.exists():
+            for path in folder.glob(filename+ext):
+                if path.is_file():
+                    return True
+        return False
+
     def getSubmissions(self, chal_slug):
 
         submissions = self.getSubmissionsRequest(chal_slug)
@@ -125,6 +157,9 @@ class HR_Scrapper():
 
         models = submissions.get('models')
         if len(models) > 0:
+            # Skip MCQ (multiple choice question)
+            if 'challenge' in models[0] and 'kind' in models[0]['challenge'] and models[0]['challenge']['kind'] == 'mcq':
+                return False
             # models are all the submissions models[0] being the latest
             sub_id = models[0]['id']
             return sub_id
@@ -139,6 +174,9 @@ class HR_Scrapper():
             raise Exception("Code_res: "+code_res)
 
         model = code_res.get('model')
+        if model == False:
+            raise WaitAndRetry(code_res.get('message'))
+
         code = model.get('code')
         language = model.get('language')
 
@@ -172,3 +210,6 @@ class HR_Scrapper():
             e.track = chal_slug
             raise e
         return code_res
+
+class WaitAndRetry (Exception):
+    pass
